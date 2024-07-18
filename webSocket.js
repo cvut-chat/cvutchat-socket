@@ -61,3 +61,5 @@ wss.on('connection', (ws, req) => {
 });
 
 console.log('WebSocket server started on port 8080');
+
+module.exports = {sendDataToClient};

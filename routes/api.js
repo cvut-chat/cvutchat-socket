@@ -4,12 +4,12 @@ const asyncHandler = require('express-async-handler');
 const router = express.Router();
 
 router.post('/rooms/:roomId/messages/send', asyncHandler(async (req, res) => {
-    const { data } = req.body;
+    const data = req.body;
     const { roomId } = req.params;
     const token = req.headers['authorization'];
-    data.IRoom._id = roomId;
+    data.RoomId = roomId;
     sendDataToClient(token, data);
-    res.status(200).json(response);
+    res.status(200);
 }));
 
 module.exports = router;

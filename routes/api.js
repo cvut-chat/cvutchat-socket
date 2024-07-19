@@ -1,6 +1,7 @@
 const express = require('express');
-const router = express.Router();
 const {sendDataToClient} = require('../webSocket');
+const asyncHandler = require('express-async-handler');
+const router = express.Router();
 
 router.post('/rooms/:roomId/messages/send', asyncHandler(async (req, res) => {
     const { data } = req.body;
@@ -10,3 +11,5 @@ router.post('/rooms/:roomId/messages/send', asyncHandler(async (req, res) => {
     sendDataToClient(token, data);
     res.status(200).json(response);
 }));
+
+module.exports = router;

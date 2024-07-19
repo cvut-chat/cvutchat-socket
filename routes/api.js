@@ -19,10 +19,8 @@ router.post('/rooms/:roomId/messages/send', asyncHandler(async (req, res) => {
         }
     }
     const data = req.body;
-    const { roomId } = req.params;
-    data.RoomId = roomId;
     sendDataToClient(token, data);
-    res.status(200);
+    res.status(200).json({success: true});
 }));
 
 module.exports = router;

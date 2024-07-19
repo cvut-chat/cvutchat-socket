@@ -4,9 +4,22 @@ const asyncHandler = require('express-async-handler');
 const router = express.Router();
 
 router.post('/rooms/:roomId/messages/send', asyncHandler(async (req, res) => {
+    let token;
+
+    if (
+        req.headers.authorization &&
+        req.headers.authorization.startsWith('Bearer')
+    ) {
+        try {
+            token = req.headers.authorization.split(' ')[1];
+        } catch (error) {
+            console.error('Not authorized, token failed');
+            res.status(401).json({ message: 'Not authorized, token failed' });
+            return;
+        }
+    }
     const data = req.body;
     const { roomId } = req.params;
-    const token = req.headers['authorization'];
     data.RoomId = roomId;
     sendDataToClient(token, data);
     res.status(200);

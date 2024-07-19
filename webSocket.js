@@ -36,16 +36,14 @@ wss.on('connection', (ws, req) => {
 
     ws.on('message', (message) => {
         try {
-            const parsedMessage = JSON.parse(message);
-            if (parsedMessage.type === 'connect' && parsedMessage.token) {
-                token = parsedMessage.token;
-                clients[token] = ws;
-                console.log(`Client connected with token: ${token}`);
-            } else {
-                console.log(`Received message: ${message}`);
-            }
-        } catch (e) {
-            console.error('Invalid JSON received:', message);
+            token = req.headers.token;
+            console.log(`Token: ${token}`);
+            clients[token] = ws;
+            console.log(`Client connected with token: ${token}`);
+        } catch (error) {
+            console.error('Not authorized, token failed');
+            ws.close();
+            return;
         }
     });
 

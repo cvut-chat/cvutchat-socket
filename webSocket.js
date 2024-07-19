@@ -7,9 +7,22 @@ const clients = {};
 function sendDataToClient(token, data) {
     const clientSocket = clients[token];
     if (clientSocket) {
-        const messageToSend = { 
-            "from": "kikinovak",
-            "content": "en mode tranzat"
+        const messageToSend = {
+            IMessage:{
+                from: data.from,
+                room: data.room,
+                content: data.content,
+                _id: data._idIMessage,
+                createdAt: data.createdAtIMessage,
+                updatedAt: data.updatedAtIMessage
+            },
+            IRoom:{
+                users: data.users,
+                name: data.name,
+                _id: data._idIRoom,
+                createdAt: data.createdAtIRoom,
+                updatedAt: data.updatedAtIRoom
+            }
         }
         // TODO Send message to room channel (1 ws channel per room)
         clientSocket.send(JSON.stringify(messageToSend));

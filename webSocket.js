@@ -37,7 +37,6 @@ wss.on('connection', (ws, req) => {
     ws.on('message', (message) => {
         try {
             token = req.headers.token;
-            console.log(`Token: ${token}`);
             clients[token] = ws;
             console.log(`Client connected with token: ${token}`);
         } catch (error) {
